@@ -68,7 +68,7 @@ $query_log = mysqli_query($con, $sql_log);
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
-                <i class="sidebar-brand-logo"><img src="<?php echo $_ENV['LINK_WEB']  ?>assets/img/E-Lib Logo White.png" alt="logo" /></i>
+                <i class="sidebar-brand-logo"><img src="../assets/img/logo/128x128/E-Lib Logo White.png" alt="logo" /></i>
                 </div>
             </a>
 
@@ -277,13 +277,9 @@ $query_log = mysqli_query($con, $sql_log);
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+          <?php
+            require_once __DIR__ . '/template/footer.php';
+          ?>
             <!-- End of Footer -->
 
         </div>
@@ -303,17 +299,6 @@ $query_log = mysqli_query($con, $sql_log);
 
             </div>
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

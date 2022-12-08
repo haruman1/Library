@@ -89,7 +89,7 @@ if ($_SESSION['role'] == 1) {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
-                <i class="sidebar-brand-logo"><img src="<?php echo $_ENV['LINK_WEB']  ?>assets/img/E-Lib Logo White.png" alt="logo" /></i>
+                <i class="sidebar-brand-logo"><img src="../assets/img/logo/128x128/E-Lib Logo White.png" alt="logo" /></i>
                 </div>
             </a>
 
@@ -184,7 +184,7 @@ if ($_SESSION['role'] == 1) {
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h2 class="m-0 font-weight-bold text-primary">Kelola Buku</h2>
-                            <a href="#" class="btn btn-primary btn-icon-split addBook">
+                            <a href="#" class="btn btn-primary btn-icon-split addBook" style="margin-top: 10px; margin-bottom: 10px;">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-plus-square"></i>
                                         </span>
@@ -249,13 +249,9 @@ if ($_SESSION['role'] == 1) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+            <?php
+            require_once __DIR__ . '/template/footer.php';
+            ?>
             <!-- End of Footer -->
 
         </div>
@@ -275,17 +271,6 @@ if ($_SESSION['role'] == 1) {
 
             </div>
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
