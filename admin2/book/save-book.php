@@ -1,9 +1,9 @@
 <?php
 // require_once '../../../inc/koneksi.php';
 // require_once '../../../functions/penting.php';
-require_once __DIR__ . '/../../../inc/env.php';
-require_once __DIR__ . '/../../../inc/koneksi.php';
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../inc/env.php';
+require_once __DIR__ . '/../../inc/koneksi.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
     $sumber = @$_FILES['file_buku']['tmp_name'];
 	$target = '../../../assets/pdf/';

@@ -320,7 +320,7 @@ if ($_SESSION['role'] == 1) {
                                     <input type="text" class="form-control form-control-user" id="isactive"
                                         placeholder="Is Active" name="is_active" value="" required>
                                 </div>
-                                <button type="submit" id="editSubmit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" id="editSubmit" class="btn btn-primary btn-user btn-block" name="submit" value="submit">
                                     Submit
                                     </button>
                             </form>
@@ -347,7 +347,7 @@ if ($_SESSION['role'] == 1) {
                 Anda yakin akan menghapus anggota ini?
                 </div>
                 <div class="modal-footer">
-                    <a class='btn btn-danger btn-icon-split' id="hapusAnggota" href=''><span class='text'>Hapus</span></a>
+                    <a class='btn btn-danger btn-icon-split' id="hapusAnggota" href='#'><span class='text'>Hapus</span></a>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

@@ -34,6 +34,40 @@ if ($_SESSION['role'] == 1) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Uploadcare API -->
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <style>
+    .uploadcare--widget__button.uploadcare--widget__button_type_open {
+    background-color: #f1f1f1;
+    color: #000000;
+    border-radius: 50px;
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+    margin-left: 5px;
+    }
+    </style>
+    <style>
+    #help-block {
+        color: red;
+    }
+    #labelupload, #help-block {
+        margin-left: 10px;
+    }
+    </style>
+    <script>
+    UPLOADCARE_LOCALE_TRANSLATIONS = {
+    buttons: {
+    choose: {
+    files: {
+    one: 'Choose File'
+    }
+    }
+    }
+    }
+    </script>
+    
+
 </head>
 
 <?php
@@ -167,7 +201,7 @@ if ($_SESSION['role'] == 1) {
 							                <th>Kategori</th>
 							                <th>Author</th>
 							                <th>File Buku</th>
-							                <th>stok</th>
+							                <th>Stok</th>
 							                <th>Jumlah Peminjaman</th>
 							                <th>Aksi</th>
                                         </tr>
@@ -197,8 +231,8 @@ if ($_SESSION['role'] == 1) {
                                             echo "<td>" . $row['file_buku'] . "</td>";    
                                             echo "<td>" . $row['stok'] . "</td>";
                                             echo "<td>" . $row['total_pinjam'] . "</td>";   
-                                            echo "<td><a class='btn btn-primary btn-icon-split' style='margin:10px;' href='#' data-toggle='modal' data-target='#editModal''><span class='text'><i class='fa fa-book'></i></span></a>
-                                                      <a class='btn btn-danger btn-icon-split' style='margin:10px;' href='#'><span class='text'><i class='fa fa-trash'></i></span></a></td>";
+                                            echo "<td><button class='btn btn-primary btn-icon-split editButton' style='margin:10px;' href='#' value='".$row['id_buku']."'><span class='text'><i class='fa fa-book'></i></span></button>
+                                                      <button class='btn btn-danger btn-icon-split deleteButton' style='margin:10px;' href='#' value='".$row['id_buku']."'><span class='text'><i class='fa fa-trash'></i></span></button></td>";
                                             echo '</tr>';
                                         }
                                     ?>
@@ -295,35 +329,55 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="/E-lib/Library/admin2/user/update-data.php">
+                <form class="user" method="POST" action="/E-lib/Library/admin2/book/save-book.php">
                                 <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID Buku" readonly required>
-                                </div>
-                                <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="username"
-                                            placeholder="Username" required>
+                                <input type="text" class="form-control form-control-user" id="idbuku"
+                                            placeholder="ID Buku" name="id_buku" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email"
-                                        placeholder="Email Address" required>
+                                <input type="text" class="form-control form-control-user" name="judulbuku" id="judulbuku"
+                                            placeholder="Judul Buku" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="password"
-                                        placeholder="Password" required>
+                                    <input type="text" class="form-control form-control-user" id="kategori"
+                                        placeholder="Kategori" name="kategoribuku" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="role"
-                                        placeholder="Role" required>
+                                    <input type="text" class="form-control form-control-user" id="author"
+                                        placeholder="Author" name="author" required>
                                 </div>
-                                <div class="file-drop-area" style="margin-top: 10px; margin-bottom: 20px;">
-                                <span class="choose-file-button">Choose files</span>
-                                <span class="file-message">or drag and drop files here</span>
-                                <input class="file-input" type="file" multiple>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="stok"
+                                        placeholder="Stok" name="stok" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Tambah
-                                    </button>
+                                <div class="file-drop-area">
+                                <label for="cover_buku" id="labelupload">Cover Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="cover_buku"
+                                id="cover_buku"
+                                />
+                                <p id="help-block">
+								Format file .jpg</p>
+                                </div>
+                                <div class="file-drop-area">
+                                <label for="file_buku" id="labelupload">File Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="file_buku"
+                                id="file_buku"
+                                />
+                                <p id="help-block">
+								Format file .Pdf</p>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" name="Simpan" value="Simpan">
+                                </input>
                             </form>
                 </div>
                 <div class="modal-footer">
@@ -332,6 +386,98 @@ if ($_SESSION['role'] == 1) {
             </div>
         </div>
     </div>
+
+    <!-- Edit Modal-->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <form class="user" method="POST" action="/E-lib/Library/admin2/book/save-book.php">
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="idbuku"
+                                            placeholder="ID Buku" name="id_buku" value="" readonly required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" name="judulbuku" id="judulbuku"
+                                            placeholder="Judul Buku" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="kategori"
+                                        placeholder="Kategori" name="kategoribuku" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="author"
+                                        placeholder="Author" name="author" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="stok"
+                                        placeholder="Stok" name="stok" required>
+                                </div>
+                                <div class="file-drop-area">
+                                <label for="cover_buku" id="labelupload">Cover Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="cover_buku"
+                                id="cover_buku"
+                                />
+                                <p id="help-block">
+								Format file .jpg</p>
+                                </div>
+                                <div class="file-drop-area">
+                                <label for="file_buku" id="labelupload">File Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="file_buku"
+                                id="file_buku"
+                                />
+                                <p id="help-block">
+								Format file .Pdf</p>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" name="Ubah" value="Ubah">
+                                </input>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Delete Modal-->
+       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                Anda yakin akan menghapus buku ini?
+                </div>
+                <div class="modal-footer">
+                    <a class='btn btn-danger btn-icon-split' id="hapusBuku" href='#'><span class='text'>Hapus</span></a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -361,7 +507,25 @@ if ($_SESSION['role'] == 1) {
     });
     </script>
     <script>
-        $('.file-upload').file_upload();
+        $(document).ready(function(){
+	    $(document).on('click', '.editButton', function(){
+		var id=$(this).val();
+ 
+		$('#editModal').modal('show');
+		$('#idbuku').val(id);
+	});
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.deleteButton', function(){
+        var id=$(this).val();
+        var hapus = "/E-lib/Library/admin2/book/delete-book.php?id_buku=";
+ 
+		$('#deleteModal').modal('show');
+		$('a#hapusBuku').attr("href", hapus + id);
+	});
+    });
     </script>
 
 
