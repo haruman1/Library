@@ -78,10 +78,10 @@ require_once __DIR__ . '/functions/penting.php';
           <div class="card mb-5">
             <div class="card-body p-5">
               <div class="overflow-hidden" data-zanim-timeline="{}" data-zanim-trigger="scroll"><img class="rounded-circle w-50" data-zanim-xs='{"delay":0}' src="https://avatars.githubusercontent.com/u/95119719?v=4" alt="Author" />
-                <h5 class="text-capitalize mt-3 mb-0" data-zanim-xs='{"delay":0.1}'>Vernando Bayu Putra P</h5>
-                <p class="mb-0 mt-3" data-zanim-xs='{"delay":0.2}'>2006503</p>
+                <h5 class="text-capitalize mt-3 mb-0" data-zanim-xs='{"delay":0.1}'>Nika Qisty Fatharani</h5>
+                <p class="mb-0 mt-3" data-zanim-xs='{"delay":0.2}'>2000662</p>
                 <div class="pt-4" data-zanim-xs='{"delay":0.3}'>
-                  <a class="d-inline-block" href="https://www.linkedin.com/in/vernando-bayu-aba081228/">
+                  <a class="d-inline-block" href="https://www.linkedin.com/in/nika-qisty-fatharani-5633b4218/">
                     <span class="fab fa-linkedin fs-2 mx-2 text-400"></span>
                   </a>
                   <a class="d-inline-block" href="#!">
@@ -109,6 +109,48 @@ require_once __DIR__ . '/functions/penting.php';
                     <span class="fab fa-instagram-square fs-2 mx-2 text-400"></span>
                   </a>
                   <a class="d-inline-block" href="https://www.facebook.com/aimban01">
+                    <span class="fab fa-facebook-square fs-2 mx-2 text-400"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+          <div class="card mb-5">
+            <div class="card-body p-5">
+              <div class="overflow-hidden" data-zanim-timeline="{}" data-zanim-trigger="scroll"><img class="rounded-circle w-50" data-zanim-xs='{"delay":0}' src="https://github.com/ilhmnuari.png" alt="Author" />
+                <h5 class="text-capitalize mt-3 mb-0" data-zanim-xs='{"delay":0.1}'>Muhamad Ilham Nuari</h5>
+                <p class="mb-0 mt-3" data-zanim-xs='{"delay":0.2}'>2008213</p>
+                <div class="pt-4" data-zanim-xs='{"delay":0.3}'>
+                  <a class="d-inline-block" href="#">
+                    <span class="fab fa-linkedin fs-2 mx-2 text-400"></span>
+                  </a>
+                  <a class="d-inline-block" href="#">
+                    <span class="fab fa-instagram-square fs-2 mx-2 text-400"></span>
+                  </a>
+                  <a class="d-inline-block" href="#">
+                    <span class="fab fa-facebook-square fs-2 mx-2 text-400"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+          <div class="card mb-5">
+            <div class="card-body p-5">
+              <div class="overflow-hidden" data-zanim-timeline="{}" data-zanim-trigger="scroll"><img class="rounded-circle w-50" data-zanim-xs='{"delay":0}' src="https://github.com/m-annurfalah.png" alt="Author" />
+                <h5 class="text-capitalize mt-3 mb-0" data-zanim-xs='{"delay":0.1}'>Muhamad Annur Falah</h5>
+                <p class="mb-0 mt-3" data-zanim-xs='{"delay":0.2}'>2008969</p>
+                <div class="pt-4" data-zanim-xs='{"delay":0.3}'>
+                  <a class="d-inline-block" href="#">
+                    <span class="fab fa-linkedin fs-2 mx-2 text-400"></span>
+                  </a>
+                  <a class="d-inline-block" href="#">
+                    <span class="fab fa-instagram-square fs-2 mx-2 text-400"></span>
+                  </a>
+                  <a class="d-inline-block" href="#">
                     <span class="fab fa-facebook-square fs-2 mx-2 text-400"></span>
                   </a>
                 </div>

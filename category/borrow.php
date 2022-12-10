@@ -31,7 +31,7 @@ require_once __DIR__ . '/../template/sidebar/search-halaman.php';
     </div>
     <div class="row">
       <div class="col-lg-4">
-        <div class="card mb-6"> <img class="card-img-top" src="<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
+      <div class="card mb-6"> <img class="card-img-top" src="../assets/img/buku/<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
         </div>
       </div>
 
@@ -161,10 +161,6 @@ require_once __DIR__ . '/../template/sidebar/search-halaman.php';
 <?php
           } ?>
 
-BEDA LAGI
-
-
-
 <div class="row">
   <div class="col-lg-12">
     <div class="card mb-5">
@@ -196,7 +192,7 @@ BEDA LAGI
   while ($data = mysqli_fetch_array($sql)) {
   ?>
     <div class="col-md-5 col-lg-3 center">
-      <div class="card"><a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>"><img class="card-img-top" src="<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" /></a>
+    <div class="card"><a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>"><img class="card-img-top" src="../assets/img/buku/<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" /></a>
         <div class="card-body" data-zanim-timeline="{}" data-zanim-trigger="scroll">
           <div class="overflow-hidden"><a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>">
               <h5 data-zanim-xs='{"delay":0}'><?= $data['judulbuku'] ?></h5>

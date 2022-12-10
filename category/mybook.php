@@ -44,7 +44,7 @@ require_once __DIR__ . '/../template/sidebar/search-halaman.php';
       while ($row = mysqli_fetch_array($query)) {
       ?>
 
-        <img class="card-img mb-2" src="<?= $row['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
+        <img class="card-img mb-2" src="../assets/img/buku/<?= $row['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
         <!--/.bg-holder-->
     </div>
     <div class="col-lg-4 px-5 py-6 my-lg-2 ml-2 bg-white d-flex align-items-center">

@@ -70,7 +70,6 @@ if (isset($_SESSION['nama'])) {
             <?php } else {
             } ?>
             <li class="nav-item "><a class="nav-link" href="<?php echo $_ENV['LINK_WEB']  ?>about.php" role="button">About Us</a></li>
-            <li class="nav-item "><a class="nav-link" href="<?php echo $_ENV['LINK_WEB']  ?>category/cek-buku.php" role="button">Cek Stok Buku</a></li>
           </ul>
 
           <?php

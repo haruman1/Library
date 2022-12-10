@@ -23,9 +23,9 @@ require_once __DIR__ . '/../template/sidebar/nama-halaman.php';
             if ($queryResults > 0) {
                 while ($data = mysqli_fetch_assoc($result)) {
             ?>
-                    <div class="col-lg-2 px-3 py-3 my-lg-2 bg-white position-relative">
+                    <div class="col-lg-2 px-3 py-3 my-lg-2 bg-white d-flex position-relative">
                         <a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>">
-                            <img class="card-img mb-2" src="<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
+                            <img class="card-img mt-6 " src="../assets/img/buku/<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
                         </a>
                     </div>
                     <div class="col-lg-4 px-5 py-6 my-lg-2 ml-2 bg-white d-flex align-items-center">

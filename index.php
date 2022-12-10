@@ -46,7 +46,7 @@ require_once __DIR__ . '/functions/penting.php';
             while ($data = mysqli_fetch_array($sql)) {
             ?>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card h-100"><a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>"><img class="card-img-top" src="<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
+                    <div class="card h-100"><a href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>"><img class="card-img-top" src="assets/img/buku/<?= $data['cover_buku'] ?>" alt="<?= $data['judulbuku'] ?>" />
                             <div class="card-body" data-zanim-timeline="{}" data-zanim-trigger="scroll">
                                 <div class="overflow-hidden">
                                     <h5 data-zanim-xs='{"delay":0}'><?= $data['judulbuku'] ?></h5>
