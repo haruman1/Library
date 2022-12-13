@@ -4,6 +4,11 @@
 require_once __DIR__ . '/../inc/env.php';
 require_once __DIR__ . '/../functions/penting.php';
 session_start();
+if (isset($_SESSION['nama'])) {
+    $nama = $_SESSION['nama'];
+    $mysqli_user = mysqli_query($con, "SELECT * FROM user WHERE nama = '$nama'");
+    $fetchdata = mysqli_fetch_array($mysqli_user);
+    }
 if ($_SESSION['role'] == 1) {
 ?>
 
@@ -53,8 +58,8 @@ if ($_SESSION['role'] == 1) {
 
 // $hitung_transaksi = mysqli_fetch_array(mysqli_query($con, "SELECT SUM(total_pinjam) as total from hlmnbuku")[0]);
 
-$sql_log = "SELECT keterangan, waktu, judulbuku FROM log_buku";
-$query_log = mysqli_query($con, $sql_log);
+$sql_transaction = "SELECT * FROM transaksibuku";
+$query_transaction = mysqli_query($con, $sql_transaction);
 ?>
 
 <body id="page-top">
@@ -76,7 +81,7 @@ $query_log = mysqli_query($con, $sql_log);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -91,7 +96,7 @@ $query_log = mysqli_query($con, $sql_log);
                     <i class="fas fa-fw fa-book"></i>
                     <span>Kelola Buku</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="transaksi.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Transaksi Buku</span></a>
@@ -132,7 +137,7 @@ $query_log = mysqli_query($con, $sql_log);
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $fetchdata['nama'] ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -159,107 +164,47 @@ $query_log = mysqli_query($con, $sql_log);
                         <h1 class="h3 mb-0 text-gray-800">Menu Admin</h1>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Koleksi Buku</div>
-                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
-                                    echo mysqli_num_rows($query_book);
-                                    ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-book fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Anggota</div>
-                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
-                                    echo mysqli_num_rows($query_user);
-                                    ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Transaksi
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h2 mb-0 mr-3 font-weight-bold text-gray-800"><?php
-                                    echo $total_pinjamhasil;
-                                    ?></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Content Row -->
+                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h2 class="m-0 font-weight-bold text-primary">Log Buku</h2>
+                            <h2 class="m-0 font-weight-bold text-primary">Transaksi Buku</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Keterangan</th>
-                                            <th>Waktu</th>
+                                            <th>ID</th>
+                                            <th>ID Buku</th>
                                             <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>File Buku</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Keterangan</th>
-                                            <th>Waktu</th>
+                                            <th>ID</th>
+                                            <th>ID Buku</th>
                                             <th>Judul Buku</th>
+                                            <th>Tanggal Peminjaman</th>
+                                            <th>Tanggal Pengembalian</th>
+                                            <th>File Buku</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
 
                                     <?php
-                                        while ($row = mysqli_fetch_array($query_log)) {
+                                        while ($row = mysqli_fetch_array($query_transaction)) {
                                             echo '<tr>';
-                                            echo "<td>" . $row['keterangan'] . "</td>";
-                                            echo "<td>" . $row['waktu'] . "</td>";
+                                            echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td>" . $row['id_buku'] . "</td>";
                                             echo "<td>" . $row['judulbuku'] . "</td>";
+                                            echo "<td>" . $row['tanggal_peminjaman'] . "</td>";
+                                            echo "<td>" . $row['tanggal_pengembalian'] . "</td>";
+                                            echo "<td>" . $row['file_buku'] . "</td>";
                                             echo '</tr>';
                                         }
                                     ?>
@@ -277,9 +222,9 @@ $query_log = mysqli_query($con, $sql_log);
             <!-- End of Main Content -->
 
             <!-- Footer -->
-          <?php
+            <?php
             require_once __DIR__ . '/template/footer.php';
-          ?>
+            ?>
             <!-- End of Footer -->
 
         </div>

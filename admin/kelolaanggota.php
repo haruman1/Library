@@ -4,6 +4,11 @@
 require_once __DIR__ . '/../inc/env.php';
 require_once __DIR__ . '/../functions/penting.php';
 session_start();
+if (isset($_SESSION['nama'])) {
+    $nama = $_SESSION['nama'];
+    $mysqli_user = mysqli_query($con, "SELECT * FROM user WHERE nama = '$nama'");
+    $fetchdata = mysqli_fetch_array($mysqli_user);
+    }
 if ($_SESSION['role'] == 1) {
 ?>
 
@@ -18,7 +23,7 @@ if ($_SESSION['role'] == 1) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin</title>
+    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin Kelola Anggota</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdnharuman.herokuapp.com/e-lib/E-Lib%20Logo/32x32/Logo.png">
@@ -37,24 +42,12 @@ if ($_SESSION['role'] == 1) {
 </head>
 
 <?php
-    $sql_user = 'SELECT nama, username, email, id_user FROM user';
+    
+    $sql_user = 'SELECT nama, username,password, email, id_user, role, is_active  FROM user';
     $query_user = mysqli_query($con, $sql_user);
 
     $sql_book = 'SELECT judulbuku, kategoribuku, author FROM hlmnbuku';
     $query_book = mysqli_query($con, $sql_book);
-
-    $i = 0;
-    $total_pinjamhasil = 0;
-    $sql_transaksi = mysqli_query($con, 'SELECT*FROM hlmnbuku');
-    while ($r = mysqli_fetch_array($sql_transaksi)) {
-        $i++;
-        $total_pinjamhasil += $r["total_pinjam"];
-    }
-
-// $hitung_transaksi = mysqli_fetch_array(mysqli_query($con, "SELECT SUM(total_pinjam) as total from hlmnbuku")[0]);
-
-$sql_transaction = "SELECT * FROM transaksibuku";
-$query_transaction = mysqli_query($con, $sql_transaction);
 ?>
 
 <body id="page-top">
@@ -81,7 +74,7 @@ $query_transaction = mysqli_query($con, $sql_transaction);
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="kelolaanggota.php">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Kelola Anggota</span></a>
@@ -91,7 +84,7 @@ $query_transaction = mysqli_query($con, $sql_transaction);
                     <i class="fas fa-fw fa-book"></i>
                     <span>Kelola Buku</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="transaksi.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Transaksi Buku</span></a>
@@ -132,7 +125,7 @@ $query_transaction = mysqli_query($con, $sql_transaction);
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $fetchdata['nama'] ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -159,47 +152,51 @@ $query_transaction = mysqli_query($con, $sql_transaction);
                         <h1 class="h3 mb-0 text-gray-800">Menu Admin</h1>
                     </div>
 
-                    
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h2 class="m-0 font-weight-bold text-primary">Transaksi Buku</h2>
+                            <h2 class="m-0 font-weight-bold text-primary">Kelola Anggota</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>ID Buku</th>
-                                            <th>Judul Buku</th>
-                                            <th>Tanggal Peminjaman</th>
-                                            <th>Tanggal Pengembalian</th>
-                                            <th>File Buku</th>
+                                            <th>Nama</th>
+							                <th>Username</th>
+							                <th>Email</th>
+							                <th>Id</th>
+							                <th>Role</th>
+							                <th>Is Active</th>
+							                <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>ID Buku</th>
-                                            <th>Judul Buku</th>
-                                            <th>Tanggal Peminjaman</th>
-                                            <th>Tanggal Pengembalian</th>
-                                            <th>File Buku</th>
+                                            <th>Nama</th>
+							                <th>Username</th>
+							                <th>Email</th>
+							                <th>Id</th>
+							                <th>Role</th>
+							                <th>Is Active</th>
+							                <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
 
                                     <?php
-                                        while ($row = mysqli_fetch_array($query_transaction)) {
+                                        while ($row = mysqli_fetch_array($query_user))
+                                        {
                                             echo '<tr>';
-                                            echo "<td>" . $row['id'] . "</td>";
-                                            echo "<td>" . $row['id_buku'] . "</td>";
-                                            echo "<td>" . $row['judulbuku'] . "</td>";
-                                            echo "<td>" . $row['tanggal_peminjaman'] . "</td>";
-                                            echo "<td>" . $row['tanggal_pengembalian'] . "</td>";
-                                            echo "<td>" . $row['file_buku'] . "</td>";
+                                            echo "<td>" . $row['nama'] . "</td>";
+                                            echo "<td>" . $row['username'] . "</td>";
+                                            // echo "<td>" . $row['password'] . "</td>";
+                                            echo "<td>" . $row['email'] . "</td>";
+                                            echo "<td>" . $row['id_user'] . "</td>";
+                                            echo "<td>" . $row['role'] . "</td>";
+                                            echo "<td>" . $row['is_active'] . "</td>";
+                                            echo "<td><button class='btn btn-primary btn-icon-split editButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-book'></i></span></button>
+                                                      <button class='btn btn-danger btn-icon-split deleteButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-trash'></></span></button></td>";
                                             echo '</tr>';
                                         }
                                     ?>
@@ -239,6 +236,7 @@ $query_transaction = mysqli_query($con, $sql_transaction);
 
             </div>
             <!-- End of Main Content -->
+
         </div>
         <!-- End of Content Wrapper -->
 
@@ -270,6 +268,83 @@ $query_transaction = mysqli_query($con, $sql_transaction);
         </div>
     </div>
 
+    
+
+       <!-- Edit Modal-->
+       <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <form class="user" id="editForm" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/user/update-data.php">
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="edit_iduser"
+                                            placeholder="ID User" name="id_user" value="" readonly required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="edit_name"
+                                            placeholder="Nama" name="nama" value="" required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="edit_username"
+                                            placeholder="Username" name="username" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="edit_email"
+                                        placeholder="Email Address" name="email" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-user" id="edit_password"
+                                        placeholder="Password" name="password" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="edit_role"
+                                        placeholder="Role" name="role" value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="edit_isactive"
+                                        placeholder="Is Active" name="is_active" value="" required>
+                                </div>
+                                <button type="submit" id="editSubmit" class="btn btn-primary btn-user btn-block" name="submit" value="submit">
+                                    Submit
+                                    </button>
+                            </form>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Delete Modal-->
+       <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                Anda yakin akan menghapus anggota ini?
+                </div>
+                <div class="modal-footer">
+                    <a class='btn btn-danger btn-icon-split' id="hapusAnggota" href='#'><span class='text'>Hapus</span></a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -289,6 +364,27 @@ $query_transaction = mysqli_query($con, $sql_transaction);
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.editButton', function(){
+		var id=$(this).val();
+ 
+		$('#editModal').modal('show');
+		$('#edit_iduser').val(id);
+	});
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
+	    $(document).on('click', '.deleteButton', function(){
+        var id=$(this).val();
+        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>/admin/user/delete-user.php?id_user=";
+ 
+		$('#deleteModal').modal('show');
+		$('a#hapusAnggota').attr("href", hapus + id);
+	});
+    });
+    </script>
 
 
 </body>

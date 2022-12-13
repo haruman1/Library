@@ -4,6 +4,11 @@
 require_once __DIR__ . '/../inc/env.php';
 require_once __DIR__ . '/../functions/penting.php';
 session_start();
+if (isset($_SESSION['nama'])) {
+    $nama = $_SESSION['nama'];
+    $mysqli_user = mysqli_query($con, "SELECT * FROM user WHERE nama = '$nama'");
+    $fetchdata = mysqli_fetch_array($mysqli_user);
+    }
 if ($_SESSION['role'] == 1) {
 ?>
 
@@ -18,7 +23,7 @@ if ($_SESSION['role'] == 1) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin Kelola Anggota</title>
+    <title><?php echo $_ENV['NAMA_WEB']  ?> | Admin Kelola Buku</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdnharuman.herokuapp.com/e-lib/E-Lib%20Logo/32x32/Logo.png">
@@ -34,14 +39,47 @@ if ($_SESSION['role'] == 1) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Uploadcare API -->
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <style>
+    .uploadcare--widget__button.uploadcare--widget__button_type_open {
+    background-color: #f1f1f1;
+    color: #000000;
+    border-radius: 50px;
+    margin-top: 10px; 
+    margin-bottom: 20px; 
+    margin-left: 5px;
+    }
+    </style>
+    <style>
+    #help-block {
+        color: red;
+    }
+    #labelupload, #help-block {
+        margin-left: 10px;
+    }
+    </style>
+    <script>
+    UPLOADCARE_LOCALE_TRANSLATIONS = {
+    buttons: {
+    choose: {
+    files: {
+    one: 'Choose File'
+    }
+    }
+    }
+    }
+    </script>
+    
+
 </head>
 
 <?php
-    
-    $sql_user = 'SELECT nama, username,password, email, id_user, role, is_active  FROM user';
+    $sql_user = 'SELECT nama, username, email, id_user FROM user';
     $query_user = mysqli_query($con, $sql_user);
 
-    $sql_book = 'SELECT judulbuku, kategoribuku, author FROM hlmnbuku';
+    $sql_book = 'SELECT id_buku, judulbuku, kategoribuku, author, file_buku,stok, total_pinjam FROM hlmnbuku';
     $query_book = mysqli_query($con, $sql_book);
 ?>
 
@@ -69,12 +107,12 @@ if ($_SESSION['role'] == 1) {
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="kelolaanggota.php">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Kelola Anggota</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="kelolabuku.php">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Kelola Buku</span></a>
@@ -120,7 +158,7 @@ if ($_SESSION['role'] == 1) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $fetchdata['nama'] ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -150,52 +188,59 @@ if ($_SESSION['role'] == 1) {
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h2 class="m-0 font-weight-bold text-primary">Kelola Anggota</h2>
+                            <h2 class="m-0 font-weight-bold text-primary">Kelola Buku</h2>
+                            <a href="#" class="btn btn-primary btn-icon-split addBook" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="text">Tambah Buku</span>
+                        </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Nama</th>
-							                <th>Username</th>
-							                <th>Email</th>
-							                <th>Id</th>
-							                <th>Role</th>
-							                <th>Is Active</th>
+                                            <th>Id Buku</th>
+							                <th>Judul Buku</th>
+							                <th>Kategori</th>
+							                <th>Author</th>
+							                <th>File Buku</th>
+							                <th>Stok</th>
+							                <th>Jumlah Peminjaman</th>
 							                <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Nama</th>
-							                <th>Username</th>
-							                <th>Email</th>
-							                <th>Id</th>
-							                <th>Role</th>
-							                <th>Is Active</th>
+                                            <th>ID Buku</th>
+							                <th>Judul Buku</th>
+							                <th>Kategori</th>
+							                <th>Author</th>
+							                <th>File Buku</th>
+							                <th>Stok</th>
+							                <th>Jumlah Peminjaman</th>
 							                <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
 
                                     <?php
-                                        while ($row = mysqli_fetch_array($query_user))
+                                        while ($row = mysqli_fetch_array($query_book))
                                         {
                                             echo '<tr>';
-                                            echo "<td>" . $row['nama'] . "</td>";
-                                            echo "<td>" . $row['username'] . "</td>";
-                                            // echo "<td>" . $row['password'] . "</td>";
-                                            echo "<td>" . $row['email'] . "</td>";
-                                            echo "<td>" . $row['id_user'] . "</td>";
-                                            echo "<td>" . $row['role'] . "</td>";
-                                            echo "<td>" . $row['is_active'] . "</td>";
-                                            echo "<td><button class='btn btn-primary btn-icon-split editButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-book'></i></span></button>
-                                                      <button class='btn btn-danger btn-icon-split deleteButton' href='#' value='".$row['id_user']."'><span class='text'><i class='fa fa-trash'></></span></button></td>";
+                                            echo "<td>" . $row['id_buku'] . "</td>";
+                                            echo "<td>" . $row['judulbuku'] . "</td>";
+                                            echo "<td>" . $row['kategoribuku'] . "</td>";
+                                            echo "<td>" . $row['author'] . "</td>";   
+                                            echo "<td>" . $row['file_buku'] . "</td>";    
+                                            echo "<td>" . $row['stok'] . "</td>";
+                                            echo "<td>" . $row['total_pinjam'] . "</td>";   
+                                            echo "<td><button class='btn btn-primary btn-icon-split editButton' style='margin:10px;' href='#' value='".$row['id_buku']."'><span class='text'><i class='fa fa-book'></i></span></button>
+                                                      <button class='btn btn-danger btn-icon-split deleteButton' style='margin:10px;' href='#' value='".$row['id_buku']."'><span class='text'><i class='fa fa-trash'></i></span></button></td>";
                                             echo '</tr>';
                                         }
                                     ?>
-                                    
                                     </tbody>
                                 </table>
                             </div>
@@ -231,7 +276,6 @@ if ($_SESSION['role'] == 1) {
 
             </div>
             <!-- End of Main Content -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -263,10 +307,78 @@ if ($_SESSION['role'] == 1) {
         </div>
     </div>
 
-    
+    <!-- Add Book Modal-->
+    <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Buku</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/book/save-book.php">
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="idbuku"
+                                            placeholder="ID Buku" name="id_buku" required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control form-control-user" name="judulbuku" id="add_judulbuku"
+                                            placeholder="Judul Buku" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="add_kategori"
+                                        placeholder="Kategori" name="kategoribuku" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="add_author"
+                                        placeholder="Author" name="author" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="add_stok"
+                                        placeholder="Stok" name="stok" required>
+                                </div>
+                                <div class="file-drop-area">
+                                <label for="cover_buku" id="labelupload">Cover Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="cover_buku"
+                                id="cover_buku"
+                                />
+                                <p id="help-block">
+								Format file .jpg</p>
+                                </div>
+                                <div class="file-drop-area">
+                                <label for="file_buku" id="labelupload">File Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="file_buku"
+                                id="file_buku"
+                                />
+                                <p id="help-block">
+								Format file .Pdf</p>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" name="Simpan" value="Simpan">
+                                </input>
+                            </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-       <!-- Edit Modal-->
-       <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Edit Modal-->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -277,39 +389,56 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" id="editForm" method="POST" action="/E-lib/Library/admin2/user/update-data.php">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/book/save-book.php">
                                 <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="iduser"
-                                            placeholder="ID User" name="id_user" value="" readonly required>
+                                <input type="text" class="form-control form-control-user" id="edit_idbuku"
+                                            placeholder="ID Buku" name="id_buku" value="" readonly required>
                                 </div>
                                 <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="name"
-                                            placeholder="Nama" name="nama" value="" required>
+                                <input type="text" class="form-control form-control-user" name="judulbuku" id="edit_judulbuku"
+                                            placeholder="Judul Buku" required>
                                 </div>
                                 <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="username"
-                                            placeholder="Username" name="username" value="" required>
+                                    <input type="text" class="form-control form-control-user" id="edit_kategori"
+                                        placeholder="Kategori" name="kategoribuku" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email"
-                                        placeholder="Email Address" name="email" value="" required>
+                                    <input type="text" class="form-control form-control-user" id="edit_author"
+                                        placeholder="Author" name="author" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="password"
-                                        placeholder="Password" name="password" value="" required>
+                                    <input type="text" class="form-control form-control-user" id="edit_stok"
+                                        placeholder="Stok" name="stok" required>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="role"
-                                        placeholder="Role" name="role" value="" required>
+                                <div class="file-drop-area">
+                                <label for="cover_buku" id="labelupload">Cover Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="cover_buku"
+                                id="cover_buku"
+                                />
+                                <p id="help-block">
+								Format file .jpg</p>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="isactive"
-                                        placeholder="Is Active" name="is_active" value="" required>
+                                <div class="file-drop-area">
+                                <label for="file_buku" id="labelupload">File Buku</label>
+                                <input
+                                type="hidden"
+                                role="uploadcare-uploader"
+                                data-public-key="10955e4554b0247de269"
+                                data-tabs="file url gdrive"
+                                name="file_buku"
+                                id="file_buku"
+                                />
+                                <p id="help-block">
+								Format file .Pdf</p>
                                 </div>
-                                <button type="submit" id="editSubmit" class="btn btn-primary btn-user btn-block" name="submit" value="submit">
-                                    Submit
-                                    </button>
-                            </form>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" name="Ubah" value="Ubah">
+                                </input>
+                    </form>
                 </div>
                 <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -330,10 +459,10 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                Anda yakin akan menghapus anggota ini?
+                Anda yakin akan menghapus buku ini?
                 </div>
                 <div class="modal-footer">
-                    <a class='btn btn-danger btn-icon-split' id="hapusAnggota" href='#'><span class='text'>Hapus</span></a>
+                    <a class='btn btn-danger btn-icon-split' id="hapusBuku" href='#'><span class='text'>Hapus</span></a>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -361,11 +490,19 @@ if ($_SESSION['role'] == 1) {
     <script src="js/demo/datatables-demo.js"></script>
     <script>
         $(document).ready(function(){
+	    $(document).on('click', '.addBook', function(){
+		$('#addBookModal').modal('show');
+		
+	});
+    });
+    </script>
+    <script>
+        $(document).ready(function(){
 	    $(document).on('click', '.editButton', function(){
 		var id=$(this).val();
  
 		$('#editModal').modal('show');
-		$('#iduser').val(id);
+		$('#edit_idbuku').val(id);
 	});
     });
     </script>
@@ -373,10 +510,10 @@ if ($_SESSION['role'] == 1) {
         $(document).ready(function(){
 	    $(document).on('click', '.deleteButton', function(){
         var id=$(this).val();
-        var hapus = "/E-lib/Library/admin2/user/delete-user.php?id_user=";
+        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>/admin/book/delete-book.php?id_buku=";
  
 		$('#deleteModal').modal('show');
-		$('a#hapusAnggota').attr("href", hapus + id);
+		$('a#hapusBuku').attr("href", hapus + id);
 	});
     });
     </script>
