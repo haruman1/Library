@@ -175,7 +175,7 @@ $query_log = mysqli_query($con, $sql_log);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Koleksi Buku</div>
-                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
+                                            <div class="h2 mb-0 font-weight-bold text-gray-800" id="totalbuku"><?php
                                     echo mysqli_num_rows($query_book);
                                     ?></div>
                                         </div>
@@ -195,7 +195,7 @@ $query_log = mysqli_query($con, $sql_log);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Anggota</div>
-                                            <div class="h2 mb-0 font-weight-bold text-gray-800"><?php
+                                            <div class="h2 mb-0 font-weight-bold text-gray-800" id="totalanggota"><?php
                                     echo mysqli_num_rows($query_user);
                                     ?></div>
                                         </div>
@@ -217,7 +217,7 @@ $query_log = mysqli_query($con, $sql_log);
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h2 mb-0 mr-3 font-weight-bold text-gray-800"><?php
+                                                    <div class="h2 mb-0 mr-3 font-weight-bold text-gray-800" id="totaltransaksi"><?php
                                     echo $total_pinjamhasil;
                                     ?></div>
                                                 </div>
