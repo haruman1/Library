@@ -50,9 +50,10 @@ require_once __DIR__ . '/../template/sidebar/search-halaman.php';
                 $str = substr($str, 0, 100) . '...';
               ?>
               <p class="mt-3" data-zanim-xs='{"delay":0.2}'><?= $str ?></p>
+              <div class="overflow-hidden">
+                <div class="d-inline-block" data-zanim-xs='{"delay":0.3}'><a class="d-flex align-items-center" href="<?= $_ENV['LINK_WEB'] ?>category/borrow.php?id_buku=<?= $data['id_buku'] ?>">Read Now!<div class="overflow-hidden ms-2" data-zanim-xs='{"from":{"opacity":0,"x":-30},"to":{"opacity":1,"x":0},"delay":0.8}'><span class="d-inline-block fw-medium">&xrarr;</span></div></a></div>
+              </div>
             </div>
-            <a class="btn-outline-info btn" href="read.php?id_buku=<?= $data['id_buku'] ?>">Baca Sekarang!</a>
-          </div>
         </div>
       <?php } ?>
     <?php } else {
