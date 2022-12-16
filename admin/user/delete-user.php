@@ -9,7 +9,7 @@ $id_user = $_GET["id_user"];//mengambil data yg dikirim
 $query = mysqli_query($con,"Delete from user where id_user = '$id_user'");
 
 if ($query) {
-    header('Location: ../kelolaanggota.php?status=sukses');
+    header('Location: ../kelolaanggota.php?delete=sukses');
 } else {
     echo "data gagal dibuang";
 }

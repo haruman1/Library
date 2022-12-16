@@ -147,10 +147,6 @@ if ($_SESSION['role'] == 1) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Menu Admin</h1>
-                    </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -364,6 +360,36 @@ if ($_SESSION['role'] == 1) {
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php if(isset($_GET['status']) && $_GET['status'] != '')
+    {
+    ?>
+    <script>
+        Swal.fire({
+        title: 'Update Berhasil!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+        })
+    </script>
+    <?php
+    }
+        ?>
+    <?php if(isset($_GET['delete']) && $_GET['delete'] != '')
+    {
+    ?>
+    <script>
+        Swal.fire({
+        title: 'Data Berhasil Dihapus!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+        })
+    </script>
+    <?php
+    }
+        ?>
+
     <script>
         $(document).ready(function(){
 	    $(document).on('click', '.editButton', function(){

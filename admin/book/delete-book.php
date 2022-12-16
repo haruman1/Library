@@ -29,7 +29,7 @@ if(isset($_GET['id_buku'])){
     $sql_hapus = "DELETE FROM hlmnbuku WHERE id_buku='".$_GET['id_buku']."'";
     $query_hapus = mysqli_query($con, $sql_hapus);
     if ($query_hapus) {
-        echo "<script> window.location.href = '../kelolabuku.php';</script>";
+        header('Location: ../kelolabuku.php?delete=sukses');
         }else{
         echo "gagal";
     }

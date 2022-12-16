@@ -77,8 +77,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
             }
     
         if ($query_ubah) {
-            // header('Location: ../kelolabuku.php?status=sukses'); exit;
-            echo "<script> window.location.href = '../kelolabuku.php';</script>";
+            header('Location: ../kelolabuku.php?status=sukses');
             }else{
             echo "gagal";
         }
