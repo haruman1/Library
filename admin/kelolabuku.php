@@ -318,7 +318,7 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/book/save-book.php">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/save-book.php">
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="idbuku"
                                             placeholder="ID Buku" name="id_buku" required>
@@ -388,7 +388,7 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/book/save-book.php">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/edit-book.php">
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="edit_idbuku"
                                             placeholder="ID Buku" name="id_buku" value="" readonly required>
@@ -541,7 +541,7 @@ if ($_SESSION['role'] == 1) {
         $(document).ready(function(){
 	    $(document).on('click', '.deleteButton', function(){
         var id=$(this).val();
-        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>/admin/book/delete-book.php?id_buku=";
+        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>admin/book/delete-book.php?id_buku=";
  
 		$('#deleteModal').modal('show');
 		$('a#hapusBuku').attr("href", hapus + id);

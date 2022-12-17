@@ -281,7 +281,7 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" id="editForm" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>/admin/user/update-data.php">
+                <form class="user" id="editForm" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/user/update-data.php">
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="edit_iduser"
                                             placeholder="ID User" name="id_user" value="" readonly required>
@@ -407,7 +407,7 @@ if ($_SESSION['role'] == 1) {
         $(document).ready(function(){
 	    $(document).on('click', '.deleteButton', function(){
         var id=$(this).val();
-        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>/admin/user/delete-user.php?id_user=";
+        var hapus = "<?php echo $_ENV['LINK_WEB']  ?>admin/user/delete-user.php?id_user=";
  
 		$('#deleteModal').modal('show');
 		$('a#hapusAnggota').attr("href", hapus + id);
