@@ -305,8 +305,8 @@ if ($_SESSION['role'] == 1) {
             </div>
         </div>
     </div>
-
-    <!-- Add Book Modal-->
+<!--
+    Add Book Modal
     <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -362,7 +362,7 @@ if ($_SESSION['role'] == 1) {
         </div>
     </div>
 
-    <!-- Edit Modal-->
+    Edit Modal
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -417,7 +417,7 @@ if ($_SESSION['role'] == 1) {
             </div>
         </div>
         </div>
-
+                                    -->
         <!-- Delete Modal-->
        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
