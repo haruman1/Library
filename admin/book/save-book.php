@@ -6,12 +6,12 @@ require_once __DIR__ . '/../../inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 
     $sumber = @$_FILES['file_buku']['tmp_name'];
-	$target = '../../../assets/pdf/';
+	$target = '../../assets/pdf/';
 	$nama_file = @$_FILES['file_buku']['name'];
 	$pindah = move_uploaded_file($sumber, $target.$nama_file);
 
     $sumber2 = @$_FILES['cover_buku']['tmp_name'];
-    $target2 = '../../../assets/img/buku/';
+    $target2 = '../../assets/img/buku/';
     $nama_file2 = @$_FILES['cover_buku']['name'];
     $pindah2 = move_uploaded_file($sumber2, $target2.$nama_file2);
 
@@ -38,7 +38,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
               window.location = '../kelolabuku.php;
           }
       })</script>";
-      header('Location: ../kelolabuku.php?status=sukses');
+      header('Location: ../kelolabuku.php?save=sukses');
       }else{
       echo "<script>
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'

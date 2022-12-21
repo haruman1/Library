@@ -318,7 +318,7 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/save-book.php">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/save-book.php" enctype="multipart/form-data">
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="idbuku"
                                             placeholder="ID Buku" name="id_buku" required>
@@ -341,27 +341,13 @@ if ($_SESSION['role'] == 1) {
                                 </div>
                                 <div class="file-drop-area">
                                 <label for="cover_buku" id="labelupload">Cover Buku</label>
-                                <input
-                                type="hidden"
-                                role="uploadcare-uploader"
-                                data-public-key="10955e4554b0247de269"
-                                data-tabs="file url gdrive"
-                                name="cover_buku"
-                                id="cover_buku"
-                                />
+                                <input class="form-control" type="file" id="cover_buku" name="cover_buku">
                                 <p id="help-block">
 								Format file .jpg</p>
                                 </div>
                                 <div class="file-drop-area">
                                 <label for="file_buku" id="labelupload">File Buku</label>
-                                <input
-                                type="hidden"
-                                role="uploadcare-uploader"
-                                data-public-key="10955e4554b0247de269"
-                                data-tabs="file url gdrive"
-                                name="file_buku"
-                                id="file_buku"
-                                />
+                                <input class="form-control" type="file" id="file_buku" name="file_buku">
                                 <p id="help-block">
 								Format file .Pdf</p>
                                 </div>
@@ -388,7 +374,7 @@ if ($_SESSION['role'] == 1) {
                     </button>
                 </div>
                 <div class="modal-body">
-                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/edit-book.php">
+                <form class="user" method="POST" action="<?php echo $_ENV['LINK_WEB']  ?>admin/book/edit-book.php" enctype="multipart/form-data">
                                 <div class="form-group">
                                 <input type="text" class="form-control form-control-user" id="edit_idbuku"
                                             placeholder="ID Buku" name="id_buku" value="" readonly required>
@@ -411,27 +397,13 @@ if ($_SESSION['role'] == 1) {
                                 </div>
                                 <div class="file-drop-area">
                                 <label for="cover_buku" id="labelupload">Cover Buku</label>
-                                <input
-                                type="hidden"
-                                role="uploadcare-uploader"
-                                data-public-key="10955e4554b0247de269"
-                                data-tabs="file url gdrive"
-                                name="cover_buku"
-                                id="cover_buku"
-                                />
+                                <input class="form-control" type="file" id="cover_buku" name="cover_buku">
                                 <p id="help-block">
 								Format file .jpg</p>
                                 </div>
                                 <div class="file-drop-area">
                                 <label for="file_buku" id="labelupload">File Buku</label>
-                                <input
-                                type="hidden"
-                                role="uploadcare-uploader"
-                                data-public-key="10955e4554b0247de269"
-                                data-tabs="file url gdrive"
-                                name="file_buku"
-                                id="file_buku"
-                                />
+                                <input class="form-control" type="file" id="file_buku" name="file_buku">
                                 <p id="help-block">
 								Format file .Pdf</p>
                                 </div>
@@ -498,6 +470,19 @@ if ($_SESSION['role'] == 1) {
     <script>
         Swal.fire({
         title: 'Update Berhasil!',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+        })
+    </script>
+    <?php
+    }
+        ?>
+    <?php if(isset($_GET['save']) && $_GET['save'] != '')
+    {
+    ?>
+    <script>
+        Swal.fire({
+        title: 'Buku Berhasil Ditambahkan!',
         icon: 'success',
         confirmButtonText: 'Ok'
         })
